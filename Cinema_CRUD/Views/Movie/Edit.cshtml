@@ -1,0 +1,72 @@
+﻿@model Movie
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<form asp-action="Edit" class="form-control" enctype="multipart/form-data">
+    <div class="row m-3">
+        <div class="col-md-6">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <input type="hidden" asp-for="ID" />
+                <label asp-for="Name" class="form-label"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group mt-3">
+                <label asp-for="Description" class="form-label"></label>
+                <textarea asp-for="Description" class="form-control"></textarea>
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+            <div class="form-group mt-3">
+                <label asp-for="StartDate" class="form-label"></label>
+                <input asp-for="StartDate" class="form-control" />
+                <span asp-validation-for="StartDate" class="text-danger"></span>
+            </div>
+            <div class="form-group mt-3">
+                <label asp-for="EndDate" class="form-label"></label>
+                <input asp-for="EndDate" class="form-control" />
+                <span asp-validation-for="EndDate" class="text-danger"></span>
+            </div>
+            <div class="form-group mt-3">
+                <label asp-for="Price" class="form-label"></label>
+                <input asp-for="Price" class="form-control" />
+                <span asp-validation-for="Price" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label asp-for="movieCategory" class="form-label"></label>
+                <select asp-for="movieCategory" class="form-control" asp-items="Html.GetEnumSelectList<MovieCategory>()"></select>
+                <span asp-validation-for="movieCategory" class="text-danger"></span>
+            </div>
+            <div class="form-group mt-3">
+                <img src="data:image/*;base64,@(Convert.ToBase64String(Model.image))" alt="profile" class="w-25" id="profilePicture" />
+                <div class="custom-file mt-2">
+                    <label asp-for="@Model.image" class="custom-file-label">Choose Picture....</label>
+                    <input type="file"
+                           accept="image/*"
+                           asp-for="@Model.image"
+                           class="form-control"
+                           onchange="document.getElementById('profilePicture').src = window.URL.createObjectURL(this.files[0])" />
+                    <span asp-validation-for="@Model.image" class="text-danger"></span>
+                </div>
+            </div>
+        </div>
+        <div class="form-group mt-3 d-flex justify-content-between">
+            <input type="submit" value="Edit" class="btn btn-primary" />
+            <a asp-action="Index" class="btn btn-outline-success"><i class="bi bi-arrow-left-square"></i> Back to List</a>
+        </div>
+    </div>
+</form>
+
+<script>
+    $(document).ready(function () {
+        $('#showDropDown').addClass('d-none');
+        $('#FormSearch').addClass('d-none');
+    });
+</script>
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

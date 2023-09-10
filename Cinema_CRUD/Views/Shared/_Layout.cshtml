@@ -1,0 +1,67 @@
+﻿@inject IMovieService _movieServices
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Cinema_CRUD</title>
+    <link rel="stylesheet" href="~/bootstrap-5.3.1-dist/css/bootstrap.css" />
+    <link rel="stylesheet" href="~/icons/bootstrap-icons-1.10.5/font/bootstrap-icons.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+    <link rel="stylesheet" href="~/sweetalert2/sweetalert2.css">
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-lg box-shadow" style="background-color: #93B1A6 ">
+            <div class="container-fluid">
+                <a class="navbar-brand" asp-controller="Movie" asp-action="Index"><i class="badge-info bi-film"></i>   Movies</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" asp-controller="Movie" asp-action="Index"><i class="bi bi-house-door"></i>   Home</a>
+                        </li>
+                        <li class="nav-item dropdown d-none" id="showDropDown">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" id="navbarDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="bi bi-list"></i>    Category
+                            </a>
+                            <ul id="categoryDropdown" class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <li><a class="dropdown-item" asp-action="Index">All</a></li>
+                                @foreach (var category in _movieServices.GetAvailableMoviesByCategory())
+                                {
+                                        <li><a class="dropdown-item" asp-action="FilterByCategory" asp-route-MovieCategory="@category">@category</a></li>                                    
+                                }
+                            </ul>
+                        </li>
+                    </ul>
+                    <form class="d-flex d-none" role="search" asp-controller="Movie" asp-action="FilterByName" id="FormSearch">
+                        <input class="form-control me-2" type="search" name="MovieName" placeholder="Search" aria-label="Search">
+                        <button class="btn btn-outline-secondary" type="submit"><i class="bi bi-search"></i></button>
+                    </form>
+                </div>
+            </div>
+        </nav>
+    </header>
+    @RenderBody()
+    @*<footer>
+            <div class="d-flex bg-success-subtle justify-content-center">
+                <p>Copyright &copy; 2023</p>
+            </div>
+        </footer>*@
+    <footer class="border-top footer text-center text-white" style="background-color: #183D3D ">
+        <div class="container">
+            <b>&copy; 2023 - Movies</b>
+        </div>
+    </footer>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/bootstrap-5.3.1-dist/js/bootstrap.js"></script>
+    <script src="~/bootstrap-5.3.1-dist/js/bootstrap.bundle.js"></script>
+    <script src="~/lib/bootbox.js/bootbox.min.js"></script>
+    <script src="~/sweetalert2/sweetalert2.all.min.js"></script>
+    <script src="~/sweetalert2/sweetalert2.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>
